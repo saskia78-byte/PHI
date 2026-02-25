@@ -1,10 +1,13 @@
 PHI/
 ├── app/
-│   ├── core/
+│   ├── Config/
+│   │   ├── Config.php
+│   ├── Controllers/
+│   ├── Core/
 │   │   ├── Database.php     → connexion base de données
 │   │   ├── Controller.php   → classe mère des controllers
 │   │   └── Router.php       → gère les routes
-│   ├── models/
+│   ├── Models/
 │   ├── views/
 │   │   └── /admin
 │   │   |   └── edit.php
@@ -27,8 +30,16 @@ PHI/
 │   │       └── footer.php
 │   │       └── header.php
 │   └── controllers/
+├── database/
+│   └── phi.sql
 ├── public/
 │   ├── css/
 │   ├── js/
 │   └── index.php
+└── vendor/
+│   ├── composer/
+│   ├── autoload.php
+└── .gitignore
 └── .htaccess
+└── architecture.text
+└── composer.json
