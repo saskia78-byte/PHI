@@ -83,7 +83,7 @@
             if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['id_user'])) {
                 $user = new User(array(
                     'id_user' => intval($_POST['id_user']),
-                    'login' => $_POST['login'] ?? '',
+                    'username' => $_POST['username'] ?? '',
                     'email' => $_POST['email'] ?? '',
                 ));
 

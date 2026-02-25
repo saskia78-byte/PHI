@@ -45,7 +45,7 @@
                         $_SESSION['login_error'] = "Login ou mot de passe incorrect";
                     }
 
-                    header('location: index.php?controller=admin&action=login'); // redirige pour “GET”
+                    header('location: index.php?controller=users&action=login'); // redirige pour “GET”
                     exit;
                 }
             }
@@ -53,17 +53,17 @@
             // Affichage du formulaire (GET)
             $error = $_SESSION['login_error'] ?? null;
             unset($_SESSION['login_error']); // on supprime après affichage
-            $this->render('admin/login', ['error' => $error]);
+            $this->render('users/login', ['error' => $error]);
         }
 
         public function dashboard() {
 
 
             if (!isset($_SESSION['id_user'])) {
-                header('location: index.php?controller=admin&action=login');
+                header('location: index.php?controller=users&action=login');
                 exit;
             }
-            $this->render('admin/dashboard');
+            $this->render('users/dashboard');
         }
 
         public function logout() {
@@ -72,7 +72,7 @@
 
             unset($_SESSION['id_user']);
 
-            header('locatloginex.php?controller=admin&action=login');
+            header('location: index.php?controller=users&action=login');
             exit;
         }
     }

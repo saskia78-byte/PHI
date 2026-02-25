@@ -31,10 +31,10 @@
         public function setId_user($id) {
             $this->id = $id;
         }
-        public function getIdRole() {
+        public function getIdRrole() {
             return $this->idRole;
         }
-        public function setIdRole($idRole) {
+        public function setIdRrole($idRole) {
             $this->idRole = $idRole;
         }
         public function getLogin() {

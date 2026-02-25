@@ -23,7 +23,7 @@
             }
 
             // fonction connexion
-            public static function logAuth(string $username) {
+            public static function logAuth(string $login) {
                 $db = Database::getInstance();
                 $req = $db->prepare('SELECT u.*, r.libelle AS role
                 FROM Users u
@@ -61,7 +61,7 @@
                 $db = Database::getInstance();
                 $req = $db->prepare('
                 INSERT INTO Users (login, password, email, id_role)
-                VALUES (:login,loginrd, :email, :id_role)');
+                VALUES (:login, :password, :email, :id_role)');
                 
                 return $req->execute([
                     ':login' => $obj->getLogin(),
