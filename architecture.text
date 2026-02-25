@@ -1,0 +1,14 @@
+PHI/
+├── app/
+│   ├── core/
+│   │   ├── Database.php     → connexion base de données
+│   │   ├── Controller.php   → classe mère des controllers
+│   │   └── Router.php       → gère les routes
+│   ├── models/
+│   ├── views/
+│   └── controllers/
+├── public/
+│   ├── css/
+│   ├── js/
+│   └── index.php
+└── .htaccess
