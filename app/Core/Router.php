@@ -12,8 +12,8 @@ class Router {
         'pages'            => ['home', 'actualites', 'contact', 'nousoutenir'],
         'approvisionnement'=> ['collecteRadio', 'collecteMateriel'],
         'mobilisation'     => ['ukraine', 'senegal', 'mayotte', 'birmanie'],
-        'users'            => ['dashboard', 'login'],
-        'admin'            => ['dashboard', 'add', 'edit'],
+        'users'            => ['dashboard', 'login', 'logout'],
+        'admin'            => ['dashboard', 'add', 'edit', 'delete'],
     ];
 
     public function callController($controller, $action) {

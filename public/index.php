@@ -4,8 +4,6 @@
     require_once __DIR__ . '/../vendor/autoload.php';
     require_once __DIR__ . '/../app/Config/Config.php';
 
-    echo "<h1>Ma page d'accueil fonctionne !</h1>";
-
     use App\Core\Router;
 
     $router = new Router();
