@@ -1,11 +1,10 @@
 <?php
 
     session_start();
-
     require_once __DIR__ . '/../vendor/autoload.php';
+    require_once __DIR__ . '/../app/Config/Config.php';
 
     echo "<h1>Ma page d'accueil fonctionne !</h1>";
-    var_dump($_GET);
 
     use App\Core\Router;
 
@@ -20,5 +19,4 @@
         $controller = 'pages';
         $action = 'home';
     }
-    var_dump($controller, $action);
     $router->callController($controller, $action);

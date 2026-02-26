@@ -1,18 +1,17 @@
 <?php
-    namespace App\Core;
+namespace App\Core;
 
-    class Controller {
-
-        protected function render($view, $data = []) {
-
-            extract($data);
-
-            // Capture le contenu de la vue
-            ob_start();
-            require __DIR__ . "/../Views/" . $view . ".php";
-            $content = ob_get_clean();
-
-            // Charge le layout
-            require __DIR__ . "/../Views/layouts/main.php";
-        }
+class Controller {
+    protected function render($view, $data = []) {
+        extract($data);
+        ob_start();
+        require __DIR__ . "/../Views/" . $view . ".php";
+        $content = ob_get_clean();
+        require __DIR__ . "/../Views/layouts/main.php";
     }
+
+    protected function redirect($url) {
+        header('Location: ' . $url);
+        exit();
+    }
+}
