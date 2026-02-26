@@ -25,16 +25,16 @@
                 }
             }
         }
-        public function getId_user() {
+        public function getIdUser() {
             return $this->id;
         }
-        public function setId_user($id) {
+        public function setIdUser($id) {
             $this->id = $id;
         }
-        public function getIdRrole() {
+        public function getIdRole() {
             return $this->idRole;
         }
-        public function setIdRrole($idRole) {
+        public function setIdRole($idRole) {
             $this->idRole = $idRole;
         }
         public function getLogin() {

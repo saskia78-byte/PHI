@@ -9,8 +9,8 @@ use App\Controllers\MobilisationsController;
 
 class Router {
     private $routes = [
-        'pages'            => ['home', 'actualites', 'contact', 'nous-soutenir'],
-        'approvisionnement'=> ['collecte-radio', 'collecte-materiel'],
+        'pages'            => ['home', 'actualites', 'contact', 'nousoutenir'],
+        'approvisionnement'=> ['collecteRadio', 'collecteMateriel'],
         'mobilisation'     => ['ukraine', 'senegal', 'mayotte', 'birmanie'],
         'users'            => ['dashboard', 'login'],
         'admin'            => ['dashboard', 'add', 'edit'],

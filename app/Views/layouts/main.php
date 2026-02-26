@@ -1,3 +1,7 @@
+<?php
+ini_set('display-errors', 1);
+error_reporting(E_ALL);
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -22,8 +26,8 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Approvisionnement</a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="<?= URL_ROOT_PUBLIC ?>/index.php?url=approvisionnement/collecte-radio">Collecte radio</a></li>
-                        <li><a class="dropdown-item" href="<?= URL_ROOT_PUBLIC ?>/index.php?url=approvisionnement/collecte-materiel">Collecte matériel</a></li>
+                        <li><a class="dropdown-item" href="<?= URL_ROOT_PUBLIC ?>/index.php?url=approvisionnement/collecteRadio">Collecte radio</a></li>
+                        <li><a class="dropdown-item" href="<?= URL_ROOT_PUBLIC ?>/index.php?url=approvisionnement/collecteMateriel">Collecte matériel</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -47,7 +51,7 @@
                     <span class="text-white">Bonjour, <?= htmlspecialchars($_SESSION['login']) ?></span>
                     <a href="<?= URL_ROOT_PUBLIC ?>/index.php?url=users/logout" class="btn btn-outline-light btn-sm">Déconnexion</a>
                 <?php endif; ?>
-                <a href="<?= URL_ROOT_PUBLIC ?>/index.php?url=pages/nous-soutenir" class="btn btn-danger">Nous soutenir</a>
+                <a href="<?= URL_ROOT_PUBLIC ?>/index.php?url=pages/nousoutenir" class="btn btn-danger">Nous soutenir</a>
             </div>
         </div>
     </div>
