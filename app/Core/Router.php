@@ -1,4 +1,5 @@
 <?php
+
     namespace App\Core;
 
     use App\Controllers\PagesController;
@@ -8,7 +9,8 @@
     class Router { 
 
         private $routes = [ 
-            'pages' => ['home', 'mobilisations', 'actualités', 'contact'], 
+            'pages' => ['home'],
+            'users' => ['dashboard', 'login'],
             'admin' => ['dashboard', 'add', 'edit'], 
             ]; 
 
