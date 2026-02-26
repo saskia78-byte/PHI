@@ -1,0 +1,42 @@
+PHI/
+├── app/
+│   ├── config/
+│   │   └── config.php      
+│   ├── core/
+│   │   ├── Database.php   
+│   │   ├── Controller.php
+│   │   └── Router.php      
+│   ├── models/
+│   │   ├── /managers
+│   │   |   └── UsersManager.php
+│   │   └── User.php
+│   ├── views/
+│   │   ├── /admin
+│   │   |   └── edit.php
+│   │   |   └── create.php
+│   │   |   └── dashboard.php
+│   │   ├── /pages
+│   │   |   └── index.php
+│   │   |   └── approvisionnements ->
+│   │   |   |   └── radiographie.php
+│   │   |   |   └── materiels.php
+│   │   |   └── mobilisations ->
+│   │   |   |   └── uk.php
+│   │   |   |   └── senegal.php
+│   │   |   |   └── mayotte.php
+│   │   |   |   └── birmanie.php
+│   │   |   └── actualités.php
+│   │   |   └── contact.php
+│   │   ├── /layouts
+│   │   |   └── main.php
+│   │   |   └── footer.php
+│   │   |   └── header.php
+│   └── controllers/
+│       └── AdminController.php
+│       └── PagesController.php
+│       └── UsersController.php
+├── public/
+│   ├── css/
+│   ├── js/
+│   └── index.php
+└── .htaccess

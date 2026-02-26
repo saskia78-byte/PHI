@@ -14,7 +14,7 @@ if (DEBUG_MODE) {
 
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'phi');
-define('DB_USER', 'root');
-define('DB_PASS', '');
+define('DB_USER', 'user1');
+define('DB_PASS', 'user1');
 define('DB_CHARSET', 'utf8mb4');
 ?>
