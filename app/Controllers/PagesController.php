@@ -2,6 +2,8 @@
 namespace App\Controllers;
 
 use App\Core\Controller;
+use App\Models\Managers\ArticleManager;
+use App\Models\Managers\PodcastManager;
 
 class PagesController extends Controller {
     
@@ -10,7 +12,14 @@ class PagesController extends Controller {
     }
 
     public function actualites() {
-        $this->render('pages/actualites');
+        $articleManager = new ArticleManager();
+        $podcastManager = new PodcastManager();
+        $articles = $articleManager->getAll();
+        $podcasts = $podcastManager->getAll();
+        $this->render('pages/actualites', [
+            'articles' => $articles,
+            'podcasts' => $podcasts
+        ]);
     }
 
     public function contact() {

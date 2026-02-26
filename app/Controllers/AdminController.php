@@ -6,7 +6,6 @@ use App\Models\Managers\UsersManager;
 use App\Models\Managers\ArticleManager;
 use App\Models\Managers\MediaManager;
 use App\Models\Managers\PodcastManager;
-use App\Models\User;
 
 class AdminController extends Controller {
 
