@@ -17,13 +17,11 @@ class AdminController extends Controller {
 
     public function dashboard() {
         $this->checkAdmin();
-        $articleManager = new ArticleManager();
-        $podcastManager = new PodcastManager();
-        $usersManager = new UsersManager();
         $this->render('admin/dashboard', [
-            'articles' => $articleManager->getAll(),
-            'podcasts' => $podcastManager->getAll(),
-            'users'    => $usersManager->getAll()
+            'articles' => (new ArticleManager())->getAll(),
+            'podcasts' => (new PodcastManager())->getAll(),
+            'users'    => (new UsersManager())->getAll(),
+            'medias'   => (new MediaManager())->getAll()
         ]);
     }
 
@@ -62,32 +60,16 @@ class AdminController extends Controller {
     public function deleteUser() {
         $this->checkAdmin();
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['idUser'])) {
-            $usersManager = new UsersManager();
-            $usersManager->delete($_POST['idUser']);
+            (new UsersManager())->delete($_POST['idUser']);
         }
         $this->redirect(URL_ROOT_PUBLIC . '/index.php?url=admin/dashboard');
-    }
-
-    public function add() {
-        $this->checkAdmin();
-        $this->render('admin/add');
-    }
-
-    public function edit() {
-        $this->checkAdmin();
-        $this->render('admin/edit');
-    }
-
-    public function delete() {
-        $this->checkAdmin();
     }
 
     // Gestion des articles
     public function addArticle() {
         $this->checkAdmin();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $articleManager = new ArticleManager();
-            $articleManager->create([
+            (new ArticleManager())->create([
                 'titre'       => $_POST['titre'],
                 'description' => $_POST['description'],
                 'idUser'      => $_SESSION['id_user']
@@ -114,8 +96,7 @@ class AdminController extends Controller {
     public function deleteArticle() {
         $this->checkAdmin();
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['idArticle'])) {
-            $articleManager = new ArticleManager();
-            $articleManager->delete($_POST['idArticle']);
+            (new ArticleManager())->delete($_POST['idArticle']);
         }
         $this->redirect(URL_ROOT_PUBLIC . '/index.php?url=admin/dashboard');
     }
@@ -124,8 +105,7 @@ class AdminController extends Controller {
     public function addPodcast() {
         $this->checkAdmin();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $podcastManager = new PodcastManager();
-            $podcastManager->create([
+            (new PodcastManager())->create([
                 'titre'       => $_POST['titre'],
                 'description' => $_POST['description'],
                 'idUser'      => $_SESSION['id_user']
@@ -152,8 +132,7 @@ class AdminController extends Controller {
     public function deletePodcast() {
         $this->checkAdmin();
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['idPodcast'])) {
-            $podcastManager = new PodcastManager();
-            $podcastManager->delete($_POST['idPodcast']);
+            (new PodcastManager())->delete($_POST['idPodcast']);
         }
         $this->redirect(URL_ROOT_PUBLIC . '/index.php?url=admin/dashboard');
     }
@@ -162,8 +141,7 @@ class AdminController extends Controller {
     public function addMedia() {
         $this->checkAdmin();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $mediaManager = new MediaManager();
-            $mediaManager->create([
+            (new MediaManager())->create([
                 'image'     => $_POST['image'] ?? null,
                 'audio'     => $_POST['audio'] ?? null,
                 'video'     => $_POST['video'] ?? null,
@@ -175,11 +153,27 @@ class AdminController extends Controller {
         $this->render('admin/addMedia');
     }
 
+    public function editMedia() {
+        $this->checkAdmin();
+        $mediaManager = new MediaManager();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['idMedia'])) {
+            $mediaManager->update($_POST['idMedia'], [
+                'image'     => $_POST['image'] ?? null,
+                'audio'     => $_POST['audio'] ?? null,
+                'video'     => $_POST['video'] ?? null,
+                'idArticle' => $_POST['idArticle'] ?? null,
+                'idPodcast' => $_POST['idPodcast'] ?? null,
+            ]);
+            $this->redirect(URL_ROOT_PUBLIC . '/index.php?url=admin/dashboard');
+        }
+        $media = $mediaManager->getById($_GET['idMedia'] ?? null);
+        $this->render('admin/editMedia', ['media' => $media]);
+    }
+
     public function deleteMedia() {
         $this->checkAdmin();
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['idMedia'])) {
-            $mediaManager = new MediaManager();
-            $mediaManager->delete($_POST['idMedia']);
+            (new MediaManager())->delete($_POST['idMedia']);
         }
         $this->redirect(URL_ROOT_PUBLIC . '/index.php?url=admin/dashboard');
     }

@@ -74,6 +74,44 @@
         </div>
     </div>
 
+    <!-- Médias -->
+    <div class="col-12 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="card-title mb-0">Médias</h5>
+                    <a href="<?= URL_ROOT_PUBLIC ?>/index.php?url=admin/addMedia" class="btn btn-primary btn-sm">Ajouter</a>
+                </div>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Audio</th>
+                            <th>Video</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach($medias as $media) : ?>
+                        <tr>
+                            <td><?= $media->getImage() ?? '-' ?></td>
+                            <td><?= $media->getAudio() ?? '-' ?></td>
+                            <td><?= $media->getVideo() ?? '-' ?></td>
+                            <td>
+                                <a href="<?= URL_ROOT_PUBLIC ?>/index.php?url=admin/editMedia&idMedia=<?= $media->getIdMedia() ?>" class="btn btn-warning btn-sm">Modifier</a>
+                                <form method="POST" action="<?= URL_ROOT_PUBLIC ?>/index.php?url=admin/deleteMedia" class="d-inline">
+                                    <input type="hidden" name="idMedia" value="<?= $media->getIdMedia() ?>">
+                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Supprimer ?')">Supprimer</button>
+                                </form>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
     <!-- Utilisateurs -->
     <div class="col-12 mb-4">
         <div class="card">
@@ -109,4 +147,5 @@
             </div>
         </div>
     </div>
+
 </div>

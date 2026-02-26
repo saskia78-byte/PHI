@@ -13,7 +13,9 @@ class UsersManager {
     }
 
     public function findByLogin($login) {
-        $sql = "SELECT * FROM users WHERE login = :login";
+        $sql = "SELECT u.*, r.libelle as role FROM users u 
+                LEFT JOIN roles r ON u.idRole = r.idRole
+                WHERE u.login = :login";
         $stmt = $this->db->prepare($sql);
         $stmt->execute([':login' => $login]);
         $row = $stmt->fetch();
@@ -21,7 +23,9 @@ class UsersManager {
     }
 
     public function findById($id) {
-        $sql = "SELECT * FROM users WHERE idUser = :id";
+        $sql = "SELECT u.*, r.libelle as role FROM users u 
+                LEFT JOIN roles r ON u.idRole = r.idRole
+                WHERE u.idUser = :id";
         $stmt = $this->db->prepare($sql);
         $stmt->execute([':id' => $id]);
         $row = $stmt->fetch();
@@ -29,14 +33,15 @@ class UsersManager {
     }
 
     public function getAll() {
-    $sql = "SELECT * FROM users";
-    $stmt = $this->db->query($sql);
-    $users = [];
-    foreach ($stmt->fetchAll() as $row) {
-        $users[] = new User($row);
+        $sql = "SELECT u.*, r.libelle as role FROM users u 
+                LEFT JOIN roles r ON u.idRole = r.idRole";
+        $stmt = $this->db->query($sql);
+        $users = [];
+        foreach ($stmt->fetchAll() as $row) {
+            $users[] = new User($row);
+        }
+        return $users;
     }
-    return $users;
-}
 
     public function create($data) {
         $sql = "INSERT INTO users (login, password, email, idRole) VALUES (:login, :password, :email, :idRole)";
