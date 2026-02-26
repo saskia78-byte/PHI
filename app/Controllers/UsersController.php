@@ -3,6 +3,8 @@ namespace App\Controllers;
 
 use App\Core\Controller;
 use App\Models\Managers\UsersManager;
+use App\Models\Managers\ArticleManager;
+use App\Models\Managers\PodcastManager;
 
 class UsersController extends Controller {
     
@@ -55,6 +57,72 @@ class UsersController extends Controller {
     public function logout() {
         session_destroy();
         $this->redirect(URL_ROOT_PUBLIC . '/index.php?url=users/login');
+    }
+
+    // Gestion des articles
+    public function addArticle() {
+        if (!isset($_SESSION['id_user'])) {
+            $this->redirect(URL_ROOT_PUBLIC . '/index.php?url=users/login');
+        }
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $articleManager = new ArticleManager();
+            $articleManager->create([
+                'titre'       => $_POST['titre'],
+                'description' => $_POST['description'],
+                'idUser'      => $_SESSION['id_user']
+            ]);
+            $this->redirect(URL_ROOT_PUBLIC . '/index.php?url=users/dashboard');
+        }
+        $this->render('users/addArticle');
+    }
+
+    public function editArticle() {
+        if (!isset($_SESSION['id_user'])) {
+            $this->redirect(URL_ROOT_PUBLIC . '/index.php?url=users/login');
+        }
+        $articleManager = new ArticleManager();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['idArticle'])) {
+            $articleManager->update($_POST['idArticle'], [
+                'titre'       => $_POST['titre'],
+                'description' => $_POST['description']
+            ]);
+            $this->redirect(URL_ROOT_PUBLIC . '/index.php?url=users/dashboard');
+        }
+        $article = $articleManager->getById($_GET['idArticle'] ?? null);
+        $this->render('users/editArticle', ['article' => $article]);
+    }
+
+    // Gestion des podcasts
+    public function addPodcast() {
+        if (!isset($_SESSION['id_user'])) {
+            $this->redirect(URL_ROOT_PUBLIC . '/index.php?url=users/login');
+        }
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $podcastManager = new PodcastManager();
+            $podcastManager->create([
+                'titre'       => $_POST['titre'],
+                'description' => $_POST['description'],
+                'idUser'      => $_SESSION['id_user']
+            ]);
+            $this->redirect(URL_ROOT_PUBLIC . '/index.php?url=users/dashboard');
+        }
+        $this->render('users/addPodcast');
+    }
+
+    public function editPodcast() {
+        if (!isset($_SESSION['id_user'])) {
+            $this->redirect(URL_ROOT_PUBLIC . '/index.php?url=users/login');
+        }
+        $podcastManager = new PodcastManager();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['idPodcast'])) {
+            $podcastManager->update($_POST['idPodcast'], [
+                'titre'       => $_POST['titre'],
+                'description' => $_POST['description']
+            ]);
+            $this->redirect(URL_ROOT_PUBLIC . '/index.php?url=users/dashboard');
+        }
+        $podcast = $podcastManager->getById($_GET['idPodcast'] ?? null);
+        $this->render('users/editPodcast', ['podcast' => $podcast]);
     }
 }
 ?>
