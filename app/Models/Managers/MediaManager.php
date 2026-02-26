@@ -63,5 +63,17 @@ class MediaManager {
         $stmt = $this->db->prepare($sql);
         return $stmt->execute([':id' => $id]);
     }
+
+    public function update($id, $data) {
+        $set = [];
+        foreach ($data as $key => $value) {
+            $set[] = "{$key} = :{$key}";
+        }
+        $setString = implode(', ', $set);
+        $sql = "UPDATE medias SET {$setString} WHERE idMedia = :id";
+        $data['id'] = $id;
+        $stmt = $this->db->prepare($sql);
+        return $stmt->execute($data);
+    }
 }
 ?>

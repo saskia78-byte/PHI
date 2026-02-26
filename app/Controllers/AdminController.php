@@ -17,7 +17,14 @@ class AdminController extends Controller {
 
     public function dashboard() {
         $this->checkAdmin();
-        $this->render('admin/dashboard');
+        $articleManager = new ArticleManager();
+        $podcastManager = new PodcastManager();
+        $usersManager = new UsersManager();
+        $this->render('admin/dashboard', [
+            'articles' => $articleManager->getAll(),
+            'podcasts' => $podcastManager->getAll(),
+            'users'    => $usersManager->getAll()
+        ]);
     }
 
     // Gestion des users

@@ -1,1 +1,119 @@
-<?php
+<h1>Mon espace</h1>
+
+<div class="row mt-4">
+
+    <!-- Articles -->
+    <div class="col-12 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="card-title mb-0">Articles</h5>
+                    <a href="<?= URL_ROOT_PUBLIC ?>/index.php?url=users/addArticle" class="btn btn-primary btn-sm">Ajouter</a>
+                </div>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Titre</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach($articles as $article) : ?>
+                        <tr>
+                            <td><?= $article->getTitre() ?></td>
+                            <td><?= $article->getDateAjout() ?></td>
+                            <td>
+                                <?php if($article->getIdUser() == $_SESSION['id_user']) : ?>
+                                    <a href="<?= URL_ROOT_PUBLIC ?>/index.php?url=users/editArticle&idArticle=<?= $article->getIdArticle() ?>" class="btn btn-warning btn-sm">Modifier</a>
+                                    <form method="POST" action="<?= URL_ROOT_PUBLIC ?>/index.php?url=users/deleteArticle" class="d-inline">
+                                        <input type="hidden" name="idArticle" value="<?= $article->getIdArticle() ?>">
+                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Supprimer ?')">Supprimer</button>
+                                    </form>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Podcasts -->
+    <div class="col-12 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="card-title mb-0">Podcasts</h5>
+                    <a href="<?= URL_ROOT_PUBLIC ?>/index.php?url=users/addPodcast" class="btn btn-primary btn-sm">Ajouter</a>
+                </div>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Titre</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach($podcasts as $podcast) : ?>
+                        <tr>
+                            <td><?= $podcast->getTitre() ?></td>
+                            <td><?= $podcast->getDateAjout() ?></td>
+                            <td>
+                                <?php if($podcast->getIdUser() == $_SESSION['id_user']) : ?>
+                                    <a href="<?= URL_ROOT_PUBLIC ?>/index.php?url=users/editPodcast&idPodcast=<?= $podcast->getIdPodcast() ?>" class="btn btn-warning btn-sm">Modifier</a>
+                                    <form method="POST" action="<?= URL_ROOT_PUBLIC ?>/index.php?url=users/deletePodcast" class="d-inline">
+                                        <input type="hidden" name="idPodcast" value="<?= $podcast->getIdPodcast() ?>">
+                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Supprimer ?')">Supprimer</button>
+                                    </form>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Médias -->
+    <div class="col-12 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="card-title mb-0">Médias</h5>
+                    <a href="<?= URL_ROOT_PUBLIC ?>/index.php?url=users/addMedia" class="btn btn-primary btn-sm">Ajouter</a>
+                </div>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Audio</th>
+                            <th>Video</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach($medias as $media) : ?>
+                        <tr>
+                            <td><?= $media->getImage() ?? '-' ?></td>
+                            <td><?= $media->getAudio() ?? '-' ?></td>
+                            <td><?= $media->getVideo() ?? '-' ?></td>
+                            <td>
+                                <a href="<?= URL_ROOT_PUBLIC ?>/index.php?url=users/editMedia&idMedia=<?= $media->getIdMedia() ?>" class="btn btn-warning btn-sm">Modifier</a>
+                                <form method="POST" action="<?= URL_ROOT_PUBLIC ?>/index.php?url=users/deleteMedia" class="d-inline">
+                                    <input type="hidden" name="idMedia" value="<?= $media->getIdMedia() ?>">
+                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Supprimer ?')">Supprimer</button>
+                                </form>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -48,6 +48,11 @@ error_reporting(E_ALL);
             </ul>
             <div class="d-flex align-items-center gap-3">
                 <?php if (isset($_SESSION['id_user'])) : ?>
+                    <?php if ($_SESSION['role'] == 1) : ?>
+                        <a href="<?= URL_ROOT_PUBLIC ?>/index.php?url=admin/dashboard" class="btn btn-warning btn-sm">Dashboard Admin</a>
+                    <?php else : ?>
+                        <a href="<?= URL_ROOT_PUBLIC ?>/index.php?url=users/dashboard" class="btn btn-secondary btn-sm">Mon espace</a>
+                    <?php endif; ?>
                     <span class="text-white">Bonjour, <?= htmlspecialchars($_SESSION['login']) ?></span>
                     <a href="<?= URL_ROOT_PUBLIC ?>/index.php?url=users/logout" class="btn btn-outline-light btn-sm">Déconnexion</a>
                 <?php endif; ?>

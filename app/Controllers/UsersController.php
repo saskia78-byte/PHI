@@ -5,6 +5,7 @@ use App\Core\Controller;
 use App\Models\Managers\UsersManager;
 use App\Models\Managers\ArticleManager;
 use App\Models\Managers\PodcastManager;
+use App\Models\Managers\MediaManager;
 
 class UsersController extends Controller {
     
@@ -51,7 +52,14 @@ class UsersController extends Controller {
         if (!isset($_SESSION['id_user'])) {
             $this->redirect(URL_ROOT_PUBLIC . '/index.php?url=users/login');
         }
-        $this->render('users/dashboard');
+        $articleManager = new ArticleManager();
+        $podcastManager = new PodcastManager();
+        $mediaManager = new MediaManager();
+        $this->render('users/dashboard', [
+            'articles' => $articleManager->getAll(),
+            'podcasts' => $podcastManager->getAll(),
+            'medias'   => $mediaManager->getAll()
+        ]);
     }
 
     public function logout() {
@@ -123,6 +131,84 @@ class UsersController extends Controller {
         }
         $podcast = $podcastManager->getById($_GET['idPodcast'] ?? null);
         $this->render('users/editPodcast', ['podcast' => $podcast]);
+    }
+
+    public function addMedia() {
+        if (!isset($_SESSION['id_user'])) {
+            $this->redirect(URL_ROOT_PUBLIC . '/index.php?url=users/login');
+        }
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $mediaManager = new MediaManager();
+            $mediaManager->create([
+                'image'     => $_POST['image'] ?? null,
+                'audio'     => $_POST['audio'] ?? null,
+                'video'     => $_POST['video'] ?? null,
+                'idArticle' => $_POST['idArticle'] ?? null,
+                'idPodcast' => $_POST['idPodcast'] ?? null,
+            ]);
+            $this->redirect(URL_ROOT_PUBLIC . '/index.php?url=users/dashboard');
+        }
+        $this->render('users/addMedia');
+    }
+
+    public function deleteMedia() {
+        if (!isset($_SESSION['id_user'])) {
+            $this->redirect(URL_ROOT_PUBLIC . '/index.php?url=users/login');
+        }
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['idMedia'])) {
+            $mediaManager = new MediaManager();
+            $mediaManager->delete($_POST['idMedia']);
+        }
+        $this->redirect(URL_ROOT_PUBLIC . '/index.php?url=users/dashboard');
+    }
+
+    public function editMedia() {
+        if (!isset($_SESSION['id_user'])) {
+            $this->redirect(URL_ROOT_PUBLIC . '/index.php?url=users/login');
+        }
+        $mediaManager = new MediaManager();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['idMedia'])) {
+            $mediaManager->update($_POST['idMedia'], [
+                'image'     => $_POST['image'] ?? null,
+                'audio'     => $_POST['audio'] ?? null,
+                'video'     => $_POST['video'] ?? null,
+                'idArticle' => $_POST['idArticle'] ?? null,
+                'idPodcast' => $_POST['idPodcast'] ?? null,
+            ]);
+            $this->redirect(URL_ROOT_PUBLIC . '/index.php?url=users/dashboard');
+        }
+        $media = $mediaManager->getById($_GET['idMedia'] ?? null);
+        $this->render('users/editMedia', ['media' => $media]);
+    }
+
+    public function deleteArticle() {
+        if (!isset($_SESSION['id_user'])) {
+            $this->redirect(URL_ROOT_PUBLIC . '/index.php?url=users/login');
+        }
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['idArticle'])) {
+            $articleManager = new ArticleManager();
+            $article = $articleManager->getById($_POST['idArticle']);
+            // Vérifie que c'est bien son article
+            if ($article && $article->getIdUser() == $_SESSION['id_user']) {
+                $articleManager->delete($_POST['idArticle']);
+            }
+        }
+        $this->redirect(URL_ROOT_PUBLIC . '/index.php?url=users/dashboard');
+    }
+
+    public function deletePodcast() {
+        if (!isset($_SESSION['id_user'])) {
+            $this->redirect(URL_ROOT_PUBLIC . '/index.php?url=users/login');
+        }
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['idPodcast'])) {
+            $podcastManager = new PodcastManager();
+            $podcast = $podcastManager->getById($_POST['idPodcast']);
+            // Vérifie que c'est bien son podcast
+            if ($podcast && $podcast->getIdUser() == $_SESSION['id_user']) {
+                $podcastManager->delete($_POST['idPodcast']);
+            }
+        }
+        $this->redirect(URL_ROOT_PUBLIC . '/index.php?url=users/dashboard');
     }
 }
 ?>
