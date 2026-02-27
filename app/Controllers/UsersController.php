@@ -8,6 +8,10 @@ use App\Models\Managers\PodcastManager;
 use App\Models\Managers\MediaManager;
 
 class UsersController extends Controller {
+
+    protected function render($view, $data = [], $layout = 'admin') {
+        parent::render($view, $data, $layout);
+    }
     
     public function login() {
         if (isset($_SESSION['id_user'])) {

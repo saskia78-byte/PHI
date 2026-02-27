@@ -9,6 +9,10 @@ use App\Models\Managers\PodcastManager;
 
 class AdminController extends Controller {
 
+    protected function render($view, $data = [], $layout = 'admin') {
+        parent::render($view, $data, $layout);
+    }
+
     private function checkAdmin() {
         if (!isset($_SESSION['id_user']) || $_SESSION['role'] !== 'admin') {
             $this->redirect(URL_ROOT_PUBLIC . '/index.php?url=users/login');
