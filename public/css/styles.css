@@ -1,0 +1,129 @@
+@font-face {
+    font-family: 'MaPolice';
+    src: url('/fonts/NewAmsterdam-Regular.woff2') format('woff2'),
+         url('/fonts/NewAmsterdam-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    font-family: 'MaPolice', sans-serif;
+}
+
+
+header img {
+    height: 50px;
+}
+
+.nav-link {
+  color: rgb(255, 255, 255);
+}
+.nav-link.active {
+    color: rgb(211, 70, 22);
+}
+.navbar-nav {
+  --bs-nav-link-color: rgb(57, 36, 29);
+  --bs-nav-link-hover-color: rgb(211, 70, 22);
+}
+.navbar-nav .nav-link.active, .navbar-nav .nav-link.show {
+  color: rgb(211, 70, 22);
+}
+.dropdown-item {
+  color: var(--bs-dropdown-link-color);
+}
+
+.bg-light {
+  --bs-bg-opacity: 1;
+  background-color: rgb(16, 100, 75) !important;
+}
+
+
+
+.dropdown-menu {
+  transform: translateY(-10px);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  display: none;
+}
+.dropdown-menu.showing {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.bg-primary {
+  --bs-bg-opacity: 1;
+  background-color: rgb(16, 100, 75) !important;
+}
+
+
+
+
+.social-btn {
+    width: 30px;
+    height: 30px;
+    padding: 0;
+}
+
+.social-img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    display: block;
+}
+
+.btn-floating {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.social-img {
+    filter: brightness(0) invert(1);
+}
+
+footer img {
+  height: 30px;
+}
+
+
+/* === Hover orange icônes réseaux sociaux === */
+
+.social-btn {
+  transition: all 0.3s ease;
+}
+
+.social-img {
+  filter: brightness(0) invert(1);
+  transition: filter 0.3s ease;
+}
+
+/* Orange au survol */
+.social-btn:hover .social-img {
+  filter: brightness(0) saturate(100%) invert(55%) sepia(95%) saturate(600%) hue-rotate(0deg) brightness(100%) contrast(105%);
+}
+
+
+
+/* ============================= */
+/* Override Bootstrap réseaux */
+/* ============================= */
+
+.btn-outline-light:hover {
+  color: #000;
+  background-color: orange;
+  border-color: orange;
+}
+
