@@ -8,6 +8,7 @@
 
 body {
     font-family: 'MaPolice', sans-serif;
+    padding-top: 70px; /* ajuste selon la hauteur de ta navbar */
 }
 
 
@@ -123,7 +124,27 @@ footer img {
 
 .btn-outline-light:hover {
   color: #000;
-  background-color: orange;
-  border-color: orange;
+  background-color: rgb(211, 70, 22);
+  border-color: rgb(211, 70, 22);
 }
+
+
+
+
+.timeline li {
+    text-align: center;
+    position: relative;
+}
+
+.timeline .arrow {
+    font-size: 24px;  /* plus gros */
+    display: block;
+    margin-bottom: 5px;
+    color: #198754; /* vert */
+}
+
+
+
+
+
 
