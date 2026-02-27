@@ -36,8 +36,9 @@ class UsersManager {
         $sql = "SELECT u.*, r.libelle as role FROM users u 
                 LEFT JOIN roles r ON u.idRole = r.idRole";
         $stmt = $this->db->query($sql);
+        $rows = $stmt->fetchAll();
         $users = [];
-        foreach ($stmt->fetchAll() as $row) {
+        foreach ($rows as $row) {
             $users[] = new User($row);
         }
         return $users;

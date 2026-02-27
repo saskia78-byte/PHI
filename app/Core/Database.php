@@ -3,7 +3,7 @@ namespace App\Core;
 
 use PDO;
 use PDOException;
-require_once __DIR__."/../Config/Config.php";
+
 
 
 //Classe Database (Singleton)

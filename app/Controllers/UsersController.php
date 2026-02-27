@@ -11,7 +11,11 @@ class UsersController extends Controller {
     
     public function login() {
         if (isset($_SESSION['id_user'])) {
-            $this->redirect(URL_ROOT_PUBLIC . '/index.php?url=users/dashboard');
+            if ($_SESSION['role'] === 'admin') {
+                $this->redirect(URL_ROOT_PUBLIC . '/index.php?url=admin/dashboard');
+            } else {
+                $this->redirect(URL_ROOT_PUBLIC . '/index.php?url=users/dashboard');
+            }
         }
 
         if (!isset($_SESSION['login_attempts'])) {
@@ -27,11 +31,15 @@ class UsersController extends Controller {
 
             if ($user && password_verify($password, $user->getPassword())) {
                 $_SESSION['id_user'] = $user->getIdUser();
-                $_SESSION['role'] = $user->getIdRole();
+                $_SESSION['role'] = $user->getRole();
                 $_SESSION['login'] = $login;
                 $_SESSION['login_attempts'] = 0;
                 unset($_SESSION['login_error']);
-                $this->redirect(URL_ROOT_PUBLIC . '/index.php?url=users/dashboard');
+                if ($_SESSION['role'] === 'admin') {
+                    $this->redirect(URL_ROOT_PUBLIC . '/index.php?url=admin/dashboard');
+                } else {
+                    $this->redirect(URL_ROOT_PUBLIC . '/index.php?url=users/dashboard');
+                }
             } else {
                 $_SESSION['login_attempts']++;
                 if ($_SESSION['login_attempts'] >= 3) {
@@ -67,7 +75,6 @@ class UsersController extends Controller {
         $this->redirect(URL_ROOT_PUBLIC . '/index.php?url=users/login');
     }
 
-    // Gestion des articles
     public function addArticle() {
         if (!isset($_SESSION['id_user'])) {
             $this->redirect(URL_ROOT_PUBLIC . '/index.php?url=users/login');
@@ -100,7 +107,20 @@ class UsersController extends Controller {
         $this->render('users/editArticle', ['article' => $article]);
     }
 
-    // Gestion des podcasts
+    public function deleteArticle() {
+        if (!isset($_SESSION['id_user'])) {
+            $this->redirect(URL_ROOT_PUBLIC . '/index.php?url=users/login');
+        }
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['idArticle'])) {
+            $articleManager = new ArticleManager();
+            $article = $articleManager->getById($_POST['idArticle']);
+            if ($article && $article->getIdUser() == $_SESSION['id_user']) {
+                $articleManager->delete($_POST['idArticle']);
+            }
+        }
+        $this->redirect(URL_ROOT_PUBLIC . '/index.php?url=users/dashboard');
+    }
+
     public function addPodcast() {
         if (!isset($_SESSION['id_user'])) {
             $this->redirect(URL_ROOT_PUBLIC . '/index.php?url=users/login');
@@ -133,6 +153,20 @@ class UsersController extends Controller {
         $this->render('users/editPodcast', ['podcast' => $podcast]);
     }
 
+    public function deletePodcast() {
+        if (!isset($_SESSION['id_user'])) {
+            $this->redirect(URL_ROOT_PUBLIC . '/index.php?url=users/login');
+        }
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['idPodcast'])) {
+            $podcastManager = new PodcastManager();
+            $podcast = $podcastManager->getById($_POST['idPodcast']);
+            if ($podcast && $podcast->getIdUser() == $_SESSION['id_user']) {
+                $podcastManager->delete($_POST['idPodcast']);
+            }
+        }
+        $this->redirect(URL_ROOT_PUBLIC . '/index.php?url=users/dashboard');
+    }
+
     public function addMedia() {
         if (!isset($_SESSION['id_user'])) {
             $this->redirect(URL_ROOT_PUBLIC . '/index.php?url=users/login');
@@ -149,17 +183,6 @@ class UsersController extends Controller {
             $this->redirect(URL_ROOT_PUBLIC . '/index.php?url=users/dashboard');
         }
         $this->render('users/addMedia');
-    }
-
-    public function deleteMedia() {
-        if (!isset($_SESSION['id_user'])) {
-            $this->redirect(URL_ROOT_PUBLIC . '/index.php?url=users/login');
-        }
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['idMedia'])) {
-            $mediaManager = new MediaManager();
-            $mediaManager->delete($_POST['idMedia']);
-        }
-        $this->redirect(URL_ROOT_PUBLIC . '/index.php?url=users/dashboard');
     }
 
     public function editMedia() {
@@ -181,32 +204,13 @@ class UsersController extends Controller {
         $this->render('users/editMedia', ['media' => $media]);
     }
 
-    public function deleteArticle() {
+    public function deleteMedia() {
         if (!isset($_SESSION['id_user'])) {
             $this->redirect(URL_ROOT_PUBLIC . '/index.php?url=users/login');
         }
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['idArticle'])) {
-            $articleManager = new ArticleManager();
-            $article = $articleManager->getById($_POST['idArticle']);
-            // Vérifie que c'est bien son article
-            if ($article && $article->getIdUser() == $_SESSION['id_user']) {
-                $articleManager->delete($_POST['idArticle']);
-            }
-        }
-        $this->redirect(URL_ROOT_PUBLIC . '/index.php?url=users/dashboard');
-    }
-
-    public function deletePodcast() {
-        if (!isset($_SESSION['id_user'])) {
-            $this->redirect(URL_ROOT_PUBLIC . '/index.php?url=users/login');
-        }
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['idPodcast'])) {
-            $podcastManager = new PodcastManager();
-            $podcast = $podcastManager->getById($_POST['idPodcast']);
-            // Vérifie que c'est bien son podcast
-            if ($podcast && $podcast->getIdUser() == $_SESSION['id_user']) {
-                $podcastManager->delete($_POST['idPodcast']);
-            }
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['idMedia'])) {
+            $mediaManager = new MediaManager();
+            $mediaManager->delete($_POST['idMedia']);
         }
         $this->redirect(URL_ROOT_PUBLIC . '/index.php?url=users/dashboard');
     }
